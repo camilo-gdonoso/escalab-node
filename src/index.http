@@ -26,3 +26,33 @@ Content-Type: application/json
 "name": "PEPITO"
     
 }
+
+// ----------------------------------------------------
+GET http://localhost:2000/
+
+###
+POST http://localhost:2000/api
+
+###
+GET http://localhost:2000/article
+
+###
+POST http://localhost:2000/article
+Content-Type: application/json
+
+{
+    "name": "Seba",
+    "email": "sparra@gmail.com"
+}
+
+###
+DELETE  http://localhost:2000/article/t3NGycPxLgDW28VgLqIx0
+
+###
+PATCH  http://localhost:2000/article/M2iIxanrP9PvlNIFCP3Cg
+Content-Type: application/json
+
+{
+"name": "PEPITO"
+    
+}
