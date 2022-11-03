@@ -14,3 +14,15 @@ Content-Type: application/json
     "name": "Seba",
     "email": "sparra@gmail.com"
 }
+
+###
+DELETE  http://localhost:2000/user/t3NGycPxLgDW28VgLqIx0
+
+###
+PATCH  http://localhost:2000/user/M2iIxanrP9PvlNIFCP3Cg
+Content-Type: application/json
+
+{
+"name": "PEPITO"
+    
+}
