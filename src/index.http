@@ -56,3 +56,10 @@ Content-Type: application/json
 "name": "PEPITO"
     
 }
+### Save a url
+POST http://localhost:2000/url
+Content-Type: application/json
+
+{
+    "link": "http://www.google.com"
+}

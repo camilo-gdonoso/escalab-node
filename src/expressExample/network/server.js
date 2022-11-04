@@ -1,7 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
 
-const { userRouter } = require('./routes')
+const { userRouter, urlRouter } = require('./routes')
 const { articleRouter } = require('./routes')
 const { mongo: { dbConnection } } = require('../database')
 
@@ -24,6 +24,7 @@ class Server {
     this.#app.use(express.urlencoded({ extended: false }))
     this.#app.use(userRouter)
     this.#app.use(articleRouter)
+    this.#app.use(urlRouter)
   }
 
   async start() {
