@@ -1,26 +1,27 @@
-const { mongo: { queries }} = require('../database')
-const { user: { getOneUser }} = queries
+const httpErrors = require('http-errors')
+const { mongo: { queries } } = require('../database')
+const { user: { getOneUser } } = queries
 
-class userService {
-    #userId
-    /**
-     * 
-     * @param {String|undefined} userId
-     */
-    constructor(userId = ''){ 
-        this.#userId = userId
-    }
+class UserService {
+  #userId
 
-    async verifyUserExists() {
-        if(!this.#userId)
-        throw new Error('Missing required field: userId')
+  /**
+   * @param {String|undefined} userId
+   */
+  constructor(userId = '') {
+    this.#userId = userId
+  }
 
-        const user = await getOneUser(this.#userId)
-        if(!user) throw new Error('User not found')
-        return user
-    }
+  async verifyUserExists() {
+    if (!this.#userId)
+      throw new httpErrors.BadRequest('Missing required field: userId')
 
+    const user = await getOneUser(this.#userId)
+
+    if (!user) throw new httpErrors.NotFound('User not found')
+
+    return user
+  }
 }
 
-
-module.exports = userService
+module.exports = UserService

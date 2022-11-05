@@ -1,35 +1,35 @@
 GET http://localhost:2000/
 
-###
-POST http://localhost:2000/api
+### get all users
+GET http://localhost:2000/api/user
 
-###
-GET http://localhost:2000/user
+### get one user
+GET http://localhost:2000/api/user/x
 
 ### Save a url
 
-POST http://localhost:2000/url/E-0PPtfubqq2C_dKLyTz2
+POST http://localhost:2000/api/url/asasa
 Content-Type: application/json
 
 ###
-POST http://localhost:2000/user
+POST http://localhost:2000/api/user
 Content-Type: application/json
 
 {
-    "name": "Daniel",
-    "lastName": "Sepulveda",
-    "email": "dsepulveda@gmail.com"
+    "name": "Mario",
+    "lastName": "Zarricueta",
+    "email": "z"
 }
 
-###
-DELETE  http://localhost:2000/user/YAsj8CEbeGnwiJVn-onL5
+### DELETE USER BY ID
+DELETE  http://localhost:2000/api/user/5oeEwmhbRR4B3H3AiXetC
 
 ###
-PATCH  http://localhost:2000/user/Na4FySpWZSSSHKdTxPh-r
+PATCH  http://localhost:2000/api/user/Na4FySpWZSSSHKdTdsds
 Content-Type: application/json
 
 {
-"name": "Sebassss"
+"email": "asads"
 }
 
 ###
@@ -69,3 +69,7 @@ Content-Type: application/json
 {
     "link": "http://www.google.com"
 }
+### Route doesnt exists
+GET http://localhost:2000/route/that/does/not/exists
+
+###
