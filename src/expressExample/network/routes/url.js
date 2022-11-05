@@ -1,55 +1,69 @@
 const { Router } = require('express')
-const { nanoid } = require('nanoid')
-const {mongo: { queries} } = require('../../database')
-
+const { UrlService } = require('../../services')
 
 const response = require('./response')
-const { url: { saveUrl, getOneUrl} } = queries
-
-
 const UrlRouter = Router()
 
+UrlRouter.route('/url/:userId')
+  .post(async (req, res) => {
+    const {
+      body: { link },
+      params: { userId }
+    } = req
+    const urlService = new UrlService({ link, userId })
 
-// http://localhost:3000/user
-UrlRouter.route('/url')
-.post(async (req, res) => {
-    const { body: { link } } = req
     try {
-        const result = await saveUrl(nanoid(6), link)
-        response({ 
-            error: false,
-            message: result,
-            res,
-            status: 201
-        })
-    } catch (error) {
-        response({ message: 'Internal server error', res })
-    }
+      const result = await urlService.saveUrl()
 
-})
+      response({
+        error: false,
+        message: result,
+        res,
+        status: 201
+      })
+    } catch (error) {
+      console.error(error)
+      response({ message: 'Internal server error', res })
+    }
+  })
 
 UrlRouter.route('/url/:id')
   .get(async (req, res) => {
     const { params: { id } } = req
-   try {
-    const url = await getOneUrl(id)
-    res.redirect(url.link)
-   } catch (error) {
-    console.error(error)
-    response({ message: 'Internal server error', res })
-   }
-    // const userIndex = urls.findIndex(user => user.id === id)
 
-    // if (userIndex === -1)
-    //   return response({
-    //     message: `User with id: ${id} was not found`,
-    //     res,
-    //     status: 404
-    //   })
+    try {
+      const urlService = new UrlService({ id })
+      const url = await urlService.getUrl()
 
-    // urls.splice(userIndex, 1)
-    // response({ error: false, message: urls, res, status: 200 })
+      res.redirect(url.link)
+    } catch (error) {
+      console.error(error)
+      response({ message: 'Internal server error', res })
+    }
   })
+
+// UrlRouter.route('/url/:id')
+//   .get(async (req, res) => {
+//     const { params: { id } } = req
+//    try {
+//     const url = await getOneUrl(id)
+//     res.redirect(url.link)
+//    } catch (error) {
+//     console.error(error)
+//     response({ message: 'Internal server error', res })
+//    }
+//     // const userIndex = urls.findIndex(user => user.id === id)
+
+//     // if (userIndex === -1)
+//     //   return response({
+//     //     message: `User with id: ${id} was not found`,
+//     //     res,
+//     //     status: 404
+//     //   })
+
+//     // urls.splice(userIndex, 1)
+//     // response({ error: false, message: urls, res, status: 200 })
+//   })
 //   UserRouter.route('/user/:id')
 //   .delete((req, res) => {
 //     const { params: { id } } = req

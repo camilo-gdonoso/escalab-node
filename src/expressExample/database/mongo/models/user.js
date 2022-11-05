@@ -1,20 +1,23 @@
 const { model, Schema } = require('mongoose')
 
-const UrlSchema = new Schema(
+const UserSchema = new Schema(
   {
     id: {
       required: true,
       type: String,
       unique: true
     },
-    link: {
+    name: {
       required: true,
       type: String
     },
-    userId: {
-      type: Schema.Types.ObjectId,
+    lastName: {
       required: true,
-      ref: 'users'
+      type: String
+    },
+    email: {
+      required: true,
+      type: String
     }
   },
   {
@@ -24,10 +27,17 @@ const UrlSchema = new Schema(
       transform: (_, ret) => {
         delete ret._id
       }
+    },
+    virtuals: {
+      fullName: {
+        get() {
+          return `${this.name} ${this.lastName}`
+        }
+      }
     }
   }
 )
 
-const UrlModel = model('urls', UrlSchema)
+const UserModel = model('users', UserSchema)
 
-module.exports = UrlModel
+module.exports = UserModel
